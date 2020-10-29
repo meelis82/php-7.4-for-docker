@@ -60,9 +60,9 @@ RUN apt-get update && apt-get install -y \
         xmlrpc \
         zip
 
-RUN curl -sL https://getcomposer.org/installer | php -- --install-dir /usr/bin --filename composer && composer global require drush/drush:8.* && ln -s /root/.composer/vendor/drush/drush/drush /usr/local/bin/drush
+RUN groupadd -g 1000 container && userdel www-data && useradd -d /home/container -o -s /bin/bash -u 1000 -g 1000 container && mkdir -p /home/container && mkdir -p /home/container/.composer && chown container.container -R /home/container
 
-RUN groupadd -g 1000 container && userdel www-data && useradd -d /apache/data -o -s /bin/bash -u 1000 -g 1000 container
+RUN curl -sL https://getcomposer.org/installer | php -- --install-dir /usr/bin --filename composer && /bin/su - container -lc "composer global require drush/drush:8.*" && ln -s /home/container/.composer/vendor/drush/drush/drush /usr/local/bin/drush
 
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY php.ini /usr/local/etc/php/conf.d/php.ini
