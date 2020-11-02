@@ -36,8 +36,10 @@ RUN apt-get update && apt-get install -y \
         webp \
         wget \
         zlib1g-dev \
-    && pecl install apcu igbinary redis xdebug \
-    && docker-php-ext-enable apcu igbinary redis xdebug \
+	git \
+	libmcrypt-dev \
+    && pecl install apcu igbinary redis xdebug mcrypt \
+    && docker-php-ext-enable apcu igbinary redis xdebug mcrypt \
     && docker-php-ext-configure \
         gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ --with-webp \
     && docker-php-ext-install -j$(nproc) \
