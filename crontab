@@ -1,0 +1,1 @@
+* * * * * /opt/bitnami/php/sbin/php-fpm /app/vendor/yiisoft queue/run
